@@ -1,0 +1,24 @@
+{
+  "name": "startly",
+  "version": "1.0.0",
+  "description": "Halaman awal browser pribadi yang minimalis dengan jam, pencarian, shortcut, dan kustomisasi.",
+  "private": true,
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "startpage",
+    "express",
+    "vanilla-javascript"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

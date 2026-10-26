@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="id" data-theme="dark" data-accent="indigo" data-background="default">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080a0f" />
+    <meta
+      name="description"
+      content="Startly adalah halaman awal browser pribadi yang minimalis, dengan jam, pencarian, shortcut, dan kustomisasi."
+    />
+    <title>Startly — Halaman awal pribadi</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%236366f1'/%3E%3Ccircle cx='16' cy='16' r='6' fill='white'/%3E%3Ccircle cx='16' cy='16' r='2.2' fill='%236366f1'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="brand" href="./" aria-label="Startly — muat ulang halaman">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="7.5" />
+              <circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none" />
+            </svg>
+          </span>
+          <span class="brand-name">Startly</span>
+        </a>
+
+        <button
+          type="button"
+          class="icon-button"
+          id="open-settings"
+          aria-label="Buka pengaturan"
+          aria-haspopup="dialog"
+          aria-controls="settings-dialog"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M4 7h9" />
+            <path d="M18 7h2" />
+            <path d="M4 17h2" />
+            <path d="M11 17h9" />
+            <circle cx="15.5" cy="7" r="2" />
+            <circle cx="8" cy="17" r="2" />
+          </svg>
+        </button>
+      </header>
+
+      <main class="main-content">
+        <h1 class="sr-only">Startly — halaman awal pribadi</h1>
+
+        <section class="hero" aria-label="Jam, tanggal, dan pencarian">
+          <div class="clock">
+            <time id="clock" datetime="" aria-label="Jam saat ini">
+              <span id="clock-time">00:00</span>
+              <span class="clock-seconds" aria-hidden="true">
+                <span class="clock-seconds-dot"></span>
+                <span id="clock-seconds">00</span>
+              </span>
+            </time>
+          </div>
+
+          <p class="date" id="current-date">Memuat tanggal…</p>
+
+          <form
+            class="search"
+            id="search-form"
+            role="search"
+            action="https://www.google.com/search"
+            method="get"
+          >
+            <label class="sr-only" for="search-input">Cari di Google atau masukkan alamat situs</label>
+            <svg
+              class="search-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="6.5" />
+              <path d="m16 16 4.5 4.5" />
+            </svg>
+
+            <input
+              id="search-input"
+              name="q"
+              type="search"
+              placeholder="Cari di Google atau tempel tautan…"
+              maxlength="2048"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+              enterkeyhint="search"
+            />
+
+            <button type="submit" class="search-button" aria-label="Cari di Google">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14" />
+                <path d="m13 6 6 6-6 6" />
+              </svg>
+            </button>
+          </form>
+
+          <div class="url-hint" id="url-hint" hidden>
+            <span class="url-hint-label">
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+              </svg>
+              <span class="url-host" id="url-host"></span>
+            </span>
+            <a class="url-open" id="url-open" href="#" target="_blank" rel="noopener noreferrer">
+              Buka situs
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M7 17 17 7" />
+                <path d="M8 7h9v9" />
+              </svg>
+            </a>
+          </div>
+        </section>
+
+        <section class="shortcuts" aria-labelledby="shortcuts-title">
+          <h2 class="sr-only" id="shortcuts-title">Shortcut situs</h2>
+          <div class="shortcut-grid" id="shortcut-grid">
+            <button type="button" class="shortcut-add" id="add-shortcut">
+              <span class="shortcut-icon add-icon" aria-hidden="true">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </span>
+              <span class="shortcut-name">Tambah</span>
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Semua data tersimpan lokal di browser ini</p>
+      </footer>
+    </div>
+
+    <!-- Dialog untuk menambah shortcut -->
+    <dialog class="dialog" id="shortcut-dialog" aria-labelledby="shortcut-dialog-title">
+      <form class="dialog-panel" id="shortcut-form" novalidate>
+        <div class="dialog-header">
+          <div>
+            <p class="dialog-kicker">Shortcut baru</p>
+            <h2 class="dialog-title" id="shortcut-dialog-title">Tambahkan situs</h2>
+          </div>
+          <button type="button" class="icon-button dialog-close" data-close-dialog aria-label="Tutup formulir">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="form-field">
+          <label for="shortcut-name">Nama</label>
+          <input
+            id="shortcut-name"
+            name="name"
+            type="text"
+            maxlength="24"
+            placeholder="Contoh: Wikipedia"
+            autocomplete="off"
+            required
+          />
+          <p class="field-hint">Maksimal 24 karakter.</p>
+        </div>
+
+        <div class="form-field">
+          <label for="shortcut-url">Alamat situs</label>
+          <input
+            id="shortcut-url"
+            name="url"
+            type="text"
+            inputmode="url"
+            placeholder="https://wikipedia.org"
+            maxlength="2048"
+            autocomplete="off"
+            autocapitalize="none"
+            spellcheck="false"
+            required
+          />
+          <p class="field-hint">Awalan https:// ditambahkan otomatis jika belum ada.</p>
+        </div>
+
+        <p class="form-error" id="shortcut-error" role="alert" hidden></p>
+
+        <div class="dialog-actions">
+          <button type="button" class="button button-ghost" data-close-dialog>Batal</button>
+          <button type="submit" class="button button-primary">Tambah shortcut</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Dialog pengaturan -->
+    <dialog class="dialog dialog-wide" id="settings-dialog" aria-labelledby="settings-title">
+      <div class="dialog-panel">
+        <div class="dialog-header">
+          <div>
+            <p class="dialog-kicker">Personalisasi</p>
+            <h2 class="dialog-title" id="settings-title">Pengaturan</h2>
+          </div>
+          <button type="button" class="icon-button dialog-close" data-close-dialog aria-label="Tutup pengaturan">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </div>
+
+        <section class="settings-section">
+          <div class="settings-copy">
+            <h3 class="settings-title">Tema</h3>
+            <p class="settings-description">Sesuaikan tampilan dengan suasana Anda.</p>
+          </div>
+          <div class="segmented" role="group" aria-label="Pilih tema">
+            <button type="button" class="segment" data-theme-choice="light" aria-pressed="false">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41" />
+              </svg>
+              Terang
+            </button>
+            <button type="button" class="segment" data-theme-choice="dark" aria-pressed="true">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" />
+              </svg>
+              Gelap
+            </button>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <div class="settings-copy">
+            <h3 class="settings-title">Warna aksen</h3>
+            <p class="settings-description">Warna untuk sorotan dan tombol utama.</p>
+          </div>
+          <div class="accent-options" role="group" aria-label="Pilih warna aksen">
+            <button type="button" class="accent-option" data-accent-choice="indigo" aria-label="Indigo" aria-pressed="false"></button>
+            <button type="button" class="accent-option" data-accent-choice="emerald" aria-label="Emerald" aria-pressed="false"></button>
+            <button type="button" class="accent-option" data-accent-choice="rose" aria-label="Rose" aria-pressed="false"></button>
+            <button type="button" class="accent-option" data-accent-choice="amber" aria-label="Amber" aria-pressed="false"></button>
+            <button type="button" class="accent-option" data-accent-choice="sky" aria-label="Langit" aria-pressed="false"></button>
+            <button type="button" class="accent-option" data-accent-choice="violet" aria-label="Violet" aria-pressed="false"></button>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <div class="settings-copy">
+            <h3 class="settings-title">Latar belakang</h3>
+            <p class="settings-description">Pilih suasana bawaan atau pasang gambar sendiri.</p>
+          </div>
+
+          <div class="background-options" role="group" aria-label="Pilih latar belakang">
+            <button type="button" class="bg-option" data-background-choice="default" aria-pressed="false">
+              <span class="bg-preview bg-preview--default" aria-hidden="true"></span>
+              <span>Bawaan</span>
+            </button>
+            <button type="button" class="bg-option" data-background-choice="dawn" aria-pressed="false">
+              <span class="bg-preview bg-preview--dawn" aria-hidden="true"></span>
+              <span>Fajar</span>
+            </button>
+            <button type="button" class="bg-option" data-background-choice="ocean" aria-pressed="false">
+              <span class="bg-preview bg-preview--ocean" aria-hidden="true"></span>
+              <span>Samudra</span>
+            </button>
+            <button type="button" class="bg-option" data-background-choice="forest" aria-pressed="false">
+              <span class="bg-preview bg-preview--forest" aria-hidden="true"></span>
+              <span>Hutan</span>
+            </button>
+            <button type="button" class="bg-option" data-background-choice="mono" aria-pressed="false">
+              <span class="bg-preview bg-preview--mono" aria-hidden="true"></span>
+              <span>Netral</span>
+            </button>
+          </div>
+
+          <div class="form-field wallpaper-field">
+            <label for="wallpaper-url">URL wallpaper <span class="field-optional">(opsional)</span></label>
+            <div class="input-with-button">
+              <input
+                id="wallpaper-url"
+                type="text"
+                inputmode="url"
+                placeholder="https://contoh.com/gambar.jpg"
+                maxlength="2048"
+                autocomplete="off"
+                autocapitalize="none"
+                spellcheck="false"
+              />
+              <button type="button" class="button button-small" id="apply-wallpaper">Pasang</button>
+            </div>
+            <p class="field-hint">Mendukung tautan gambar http/https. Pilih latar bawaan untuk melepas wallpaper.</p>
+            <div class="wallpaper-footer">
+              <button type="button" class="text-button" id="remove-wallpaper">Hapus wallpaper</button>
+            </div>
+          </div>
+        </section>
+
+        <p class="settings-note">Pengaturan disimpan otomatis di browser ini.</p>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
