@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="id" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#08100d" />
+    <meta
+      name="description"
+      content="Startly adalah halaman awal browser yang tenang, modern, dan personal. Jam, pencarian Google, dan shortcut favoritmu dalam satu ruang."
+    />
+    <meta property="og:title" content="Startly — Mulai harimu dengan tenang" />
+    <meta
+      property="og:description"
+      content="Halaman awal browser pribadi yang minimalis dengan jam, pencarian, dan shortcut yang bisa kamu atur sendiri."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Startly — Mulai harimu dengan tenang</title>
+
+    <style>
+      html {
+        background: #08100d;
+      }
+      html[data-theme='light'] {
+        background: #f0ece4;
+      }
+      body {
+        margin: 0;
+      }
+    </style>
+
+    <script>
+      (() => {
+        const root = document.documentElement;
+        let saved = {};
+
+        try {
+          const raw = window.localStorage.getItem('startly.settings.v1');
+          saved = raw ? JSON.parse(raw) : {};
+        } catch {
+          /* Penyimpanan diblokir — tetap gunakan preferensi sistem. */
+        }
+
+        if (!saved || typeof saved !== 'object' || Array.isArray(saved)) {
+          saved = {};
+        }
+
+        const prefersDark = window.matchMedia(
+          '(prefers-color-scheme: dark)',
+        ).matches;
+        const theme =
+          saved.theme === 'light' || saved.theme === 'dark'
+            ? saved.theme
+            : prefersDark
+              ? 'dark'
+              : 'light';
+
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+
+        if (
+          typeof saved.accent === 'string' &&
+          /^#[0-9a-f]{6}$/i.test(saved.accent)
+        ) {
+          root.style.setProperty('--accent', saved.accent);
+
+          const channel = (hex) => {
+            const value = parseInt(hex, 16) / 255;
+            return value <= 0.03928
+              ? value / 12.92
+              : ((value + 0.055) / 1.055) ** 2.4;
+          };
+          const luminance = (hex) =>
+            0.2126 * channel(hex.slice(0, 2)) +
+            0.7152 * channel(hex.slice(2, 4)) +
+            0.0722 * channel(hex.slice(4, 6));
+          const accent = saved.accent.slice(1);
+          const level = luminance(accent);
+          const darkContrast =
+            (level + 0.05) / (luminance('181310') + 0.05);
+          const lightContrast = 1.05 / (level + 0.05);
+
+          root.style.setProperty(
+            '--accent-contrast',
+            darkContrast >= lightContrast ? '#181310' : '#fffaf3',
+          );
+        }
+
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+          meta.setAttribute(
+            'content',
+            theme === 'dark' ? '#08100d' : '#f0ece4',
+          );
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <div
+        style="
+          display: grid;
+          min-height: 100vh;
+          place-items: center;
+          padding: 24px;
+          background: #08100d;
+          color: #f4f0e8;
+          font-family: system-ui, -apple-system, sans-serif;
+          text-align: center;
+        "
+      >
+        <p style="max-width: 34rem; margin: 0; line-height: 1.6">
+          Startly membutuhkan JavaScript untuk menampilkan jam, pencarian, dan
+          shortcut. Aktifkan JavaScript lalu muat ulang halaman ini.
+        </p>
+      </div>
+    </noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
